@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy Admission & Student Management System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #333;
+            padding: 30px 15px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            color: #4f46e5;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px 14px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #4f46e5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit { background: #4f46e5; color: white; }
+        .btn-submit:hover { background: #4338ca; }
+
+        .btn-reset { background: #f1f5f9; color: #475569; }
+        .btn-reset:hover { background: #e2e8f0; }
+
+        .btn-print { background: #10b981; color: white; width: auto; padding: 8px 20px; }
+        .btn-print:hover { background: #059669; }
+
+        /* Table Dashboard Styling */
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            width: 250px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        tr:hover { background-color: #f1f5f9; }
+
+        .no-data {
+            text-align: center;
+            color: #94a3b8;
+            padding: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Registration Form Card -->
+        <div class="card">
+            <div class="header">
+                <h1>🎓 Excellence Academy Portal</h1>
+                <p>New Student Admission & Course Registration</p>
+            </div>
+
+            <form id="studentForm">
+                <div class="form-grid">
+                    
+                    <div class="form-group">
+                        <label for="fullname">Student Full Name *</label>
+                        <input type="text" id="fullname" required placeholder="e.g. Rahul Patel">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" required placeholder="rahul@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number *</label>
+                        <input type="tel" id="mobile" required pattern="[0-9]{10}" placeholder="10 Digit Mobile No">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Date of Birth *</label>
+                        <input type="date" id="dob" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course">Select Course / Stream *</label>
+                        <select id="course" required>
+                            <option value="">-- Choose Course --</option>
+                            <option value="Full Stack Web Development">Full Stack Web Development</option>
+                            <option value="Python & Data Science">Python & Data Science</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Cyber Security">Cyber Security</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="batch">Preferred Batch Timing *</label>
+                        <select id="batch" required>
+                            <option value="">-- Choose Timing --</option>
+                            <option value="Morning (8 AM - 10 AM)">Morning (8 AM - 10 AM)</option>
+                            <option value="Afternoon (2 PM - 4 PM)">Afternoon (2 PM - 4 PM)</option>
+                            <option value="Evening (6 PM - 8 PM)">Evening (6 PM - 8 PM)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender *</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="gender" value="Male" required> Male</label>
+                            <label><input type="radio" name="gender" value="Female"> Female</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" required placeholder="e.g. Ahmedabad">
+                    </div>
+
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-submit">Register Student</button>
+                    <button type="reset" class="btn btn-reset">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Registered Students Directory / Table -->
+        <div class="card">
+            <div class="table-header">
+                <h2>📋 Enrolled Students Directory</h2>
+                <input type="text" id="searchBox" class="search-box" placeholder="🔍 Search student by name..." onkeyup="filterStudents()">
+                <button class="btn btn-print" onclick="window.print()">🖨️ Print List</button>
+            </div>
+
+            <div class="table-container">
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Batch</th>
+                            <th>Mobile</th>
+                            <th>City</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr class="no-data-row">
+                            <td colspan="6" class="no-data">No students registered yet. Fill the form above!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Functionality -->
+    <script>
+        let studentId = 101;
+
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop page reload
+
+            // Get Form Values
+            const name = document.getElementById('fullname').value;
+            const mobile = document.getElementById('mobile').value;
+            const course = document.getElementById('course').value;
+            const batch = document.getElementById('batch').value;
+            const city = document.getElementById('city').value;
+
+            // Remove 'No data' row if present
+            const noDataRow = document.querySelector('.no-data-row');
+            if (noDataRow) {
+                noDataRow.remove();
+            }
+
+            // Create new Table Row
+            const tableBody = document.getElementById('tableBody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td><strong>#ACAD-${studentId++}</strong></td>
+                <td>${name}</td>
+                <td><span style="background: #e0e7ff; color: #4338ca; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">${course}</span></td>
+                <td>${batch}</td>
+                <td>${mobile}</td>
+                <td>${city}</td>
+            `;
+
+            tableBody.appendChild(newRow);
+
+            // Reset Form
+            document.getElementById('studentForm').reset();
+            alert('🎉 Student Registered Successfully!');
+        });
+
+        // Search Filter Function
+        function filterStudents() {
+            const input = document.getElementById('searchBox').value.toLowerCase();
+            const rows = document.querySelectorAll('#tableBody tr');
+
+            rows.forEach(row => {
+                const nameText = row.children[1] ? row.children[1].textContent.toLowerCase() : '';
+                if (nameText.includes(input)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
